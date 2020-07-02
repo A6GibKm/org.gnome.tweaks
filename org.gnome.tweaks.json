@@ -23,8 +23,6 @@
         "/share/gir-1.0"
     ],
     "modules": [
-        "shared-modules/libusb/libusb.json",
-        "shared-modules/gudev/gudev.json",
         "shared-modules/intltool/intltool-0.51.json",
         {
             "name" : "polkit",
@@ -66,6 +64,8 @@
                 }
             ]
         },
+        "shared-modules/libusb/libusb.json",
+        "shared-modules/gudev/gudev.json",
         {
             "name": "pwquality",
             "config-opts": [
@@ -186,6 +186,40 @@
             ]
         },
         {
+            "name" : "udev",
+            "config-opts" : [
+                "--disable-hwdb",
+                "--disable-logging",
+                "--disable-gudev",
+                "--disable-introspection",
+                "--disable-keymap",
+                "--disable-mtd_probe"
+            ],
+            "cleanup" : [
+                "/include",
+                "/etc",
+                "/libexec",
+                "/sbin",
+                "/lib/pkgconfig",
+                "/man",
+                "/share/aclocal",
+                "/share/doc",
+                "/share/gtk-doc",
+                "/share/man",
+                "/share/pkgconfig",
+                "*.la",
+                "*.a"
+            ],
+            "sources" : [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/gentoo/eudev/archive/v3.2.9.tar.gz",
+                    "sha256": "7d281276b480da3935d1acb239748c2c9db01a8043aad7e918ce57a223d8cd24"
+                }
+            ]
+        },
+        "shared-modules/dbus-glib/dbus-glib-0.110.json",
+        {
             "name": "NetworkManager",
             "buildsystem": "meson",
             "config-opts": [
@@ -223,11 +257,37 @@
         {
             "name": "gnome-settings-daemon",
             "buildsystem": "meson",
+            "config-opts": [
+                "-Dwwan=false"
+            ],
             "sources": [
                 {
-                    "type": "archive",
-                    "url": "https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/archive/GNOME_SETTINGS_DAEMON_3_36_1/gnome-settings-daemon-GNOME_SETTINGS_DAEMON_3_36_1.tar.gz",
-                    "sha256": "e345411f79b4a1175349e144cc772c7a9eb7ab9ae3a542a73609bee471b72748"
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/GNOME/gnome-settings-daemon/",
+                    "tag": "GNOME_SETTINGS_DAEMON_3_36_1",
+                    "commit": "28ce4225535329dee6a9aff8c44bd1671ce9d2de"
+                },
+                {
+                    "type": "patch",
+                    "path": "gsd-disable-alsa.patch"
+                }
+            ]
+        },
+        {
+            "name" : "libhandy",
+            "buildsystem" : "meson",
+            "config-opts" : [
+                "-Dintrospection=enabled",
+                "-Dglade_catalog=disabled",
+                "-Dtests=false",
+                "-Dexamples=false"
+            ],
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://gitlab.gnome.org/GNOME/libhandy.git",
+                    "tag" : "v0.0.13",
+                    "commit" : "7a193d7692c9c76a1a94f17c4d30b585f77d177c"
                 }
             ]
         },

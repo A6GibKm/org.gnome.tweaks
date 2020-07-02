@@ -19,11 +19,11 @@ index 5cedb4e..729d78d 100644
 @@ -79,11 +79,13 @@ PKG_CHECK_MODULES(GLIB, [gmodule-2.0 gio-unix-2.0 >= 2.30.0])
  AC_SUBST(GLIB_CFLAGS)
  AC_SUBST(GLIB_LIBS)
-
+ 
 -PKG_CHECK_MODULES(LIBJS, [mozjs-60])
 +AS_IF([test x${enable_polkitd} = yes], [
 +  PKG_CHECK_MODULES(LIBJS, [mozjs-60])
-
+ 
 -AC_SUBST(LIBJS_CFLAGS)
 -AC_SUBST(LIBJS_CXXFLAGS)
 -AC_SUBST(LIBJS_LIBS)
@@ -31,13 +31,13 @@ index 5cedb4e..729d78d 100644
 +  AC_SUBST(LIBJS_CXXFLAGS)
 +  AC_SUBST(LIBJS_LIBS)
 +])
-
+ 
  EXPAT_LIB=""
  AC_ARG_WITH(expat, [  --with-expat=<dir>      Use expat from here],
 @@ -236,6 +238,15 @@ if test "x$with_systemdsystemunitdir" != "xno"; then
  fi
  AM_CONDITIONAL(HAVE_SYSTEMD, [test -n "$systemdsystemunitdir"])
-
+ 
 +dnl ---------------------------------------------------------------------------
 +dnl - Disable polkitd when using library alone
 +dnl ---------------------------------------------------------------------------
@@ -56,21 +56,21 @@ index 5cedb4e..729d78d 100644
          systemdsystemunitdir:       ${systemdsystemunitdir}
 +        polkitd:                    ${enable_polkitd}
          polkitd user:               ${POLKITD_USER}"
-
+ 
  if test "$have_pam" = yes ; then
 diff --git a/src/Makefile.am b/src/Makefile.am
 index 09fc7b3..c6fe91b 100644
 --- a/src/Makefile.am
 +++ b/src/Makefile.am
 @@ -1,5 +1,9 @@
-
+ 
 -SUBDIRS = polkit polkitbackend polkitagent programs
 +SUBDIRS = polkit polkitagent programs
 +
 +if BUILD_POLKITD
 +SUBDIRS += polkitbackend
 +endif
-
+ 
  if BUILD_EXAMPLES
  SUBDIRS += examples
 diff --git a/src/polkitagent/Makefile.am b/src/polkitagent/Makefile.am
@@ -78,26 +78,26 @@ index 49720db..633f9d4 100644
 --- a/src/polkitagent/Makefile.am
 +++ b/src/polkitagent/Makefile.am
 @@ -79,6 +79,7 @@ libpolkit_agent_1_la_LIBADD =                               		\
-
+ 
  libpolkit_agent_1_la_LDFLAGS = -export-symbols-regex '(^polkit_.*)'
-
+ 
 +if !POLKIT_AUTHFW_NONE
  libprivdir = $(prefix)/lib/polkit-1
  libpriv_PROGRAMS = polkit-agent-helper-1
-
+ 
 @@ -113,6 +114,8 @@ polkit_agent_helper_1_LDFLAGS = 					\
  	$(AM_LDFLAGS)							\
  	$(NULL)
-
+ 
 +endif # !POLKIT_AUTHFW_NONE
 +
  if HAVE_INTROSPECTION
-
+ 
  girdir = $(INTROSPECTION_GIRDIR)
 @@ -142,6 +145,7 @@ include $(INTROSPECTION_MAKEFILE)
-
+ 
  endif # HAVE_INTROSPECTION
-
+ 
 +if !POLKIT_AUTHFW_NONE
  # polkit-agent-helper-1 need to be setuid root because it's used to
  # authenticate not only the invoking user, but possibly also root
@@ -107,7 +107,7 @@ index 49720db..633f9d4 100644
  	-chown root $(DESTDIR)$(libprivdir)/polkit-agent-helper-1
  	-chmod 4755 $(DESTDIR)$(libprivdir)/polkit-agent-helper-1
 +endif # !POLKIT_AUTHFW_NONE
-
+ 
  EXTRA_DIST = polkitagentmarshal.list polkitagentenumtypes.h.template polkitagentenumtypes.c.template
  CLEANFILES = $(gir_DATA) $(typelibs_DATA)
 diff --git a/test/Makefile.am b/test/Makefile.am
@@ -115,11 +115,11 @@ index 59d0680..d43b0fe 100644
 --- a/test/Makefile.am
 +++ b/test/Makefile.am
 @@ -1,7 +1,11 @@
-
+ 
 -SUBDIRS = mocklibc . polkit polkitbackend
 +SUBDIRS = mocklibc . polkit
  AM_CFLAGS = $(GLIB_CFLAGS)
-
+ 
 +if BUILD_POLKITD
 +SUBDIRS += polkitbackend
 +endif
@@ -127,5 +127,6 @@ index 59d0680..d43b0fe 100644
  noinst_LTLIBRARIES = libpolkit-test-helper.la
  libpolkit_test_helper_la_SOURCES = polkittesthelper.c polkittesthelper.h
  libpolkit_test_helper_la_LIBADD = $(GLIB_LIBS)
---
+-- 
 2.21.0
+

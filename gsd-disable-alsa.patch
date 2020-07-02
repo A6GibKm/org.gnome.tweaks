@@ -1,0 +1,29 @@
+--- a/meson.build	2020-07-02 15:28:44.626820012 -0400
++++ b/meson.build	2020-07-02 15:53:54.329312544 -0400
+@@ -117,14 +117,13 @@
+ m_dep = cc.find_library('m')
+ 
+ # ALSA integration (default enabled)
+-enable_alsa = get_option('alsa')
+-assert(enable_alsa or not host_is_linux, 'ALSA is not optional on Linux platforms')
++# enable_alsa = get_option('alsa')
++# assert(enable_alsa or not host_is_linux, 'ALSA is not optional on Linux platforms')
+ 
+ libgvc = subproject(
+   'gvc',
+   default_options: [
+-    'static=true',
+-    'alsa=' + enable_alsa.to_string()
++    'static=true'
+   ]
+ )
+ libgvc_dep = libgvc.get_variable('libgvc_dep')
+@@ -254,7 +253,7 @@
+ output += '        source code location:     ' + meson.source_root() + '\n'
+ output += '        compiler:                 ' + cc.get_id() + '\n'
+ output += '        cflags:                   ' + ' '.join(compiler_flags) + '\n\n'
+-output += '        ALSA support:             ' + enable_alsa.to_string() + '\n'
++# output += '        ALSA support:             ' + enable_alsa.to_string() + '\n'
+ output += '        NetworkManager support:   ' + enable_network_manager.to_string() + '\n'
+ output += '        Smartcard support:        ' + enable_smartcard.to_string() + '\n'
+ output += '        Cups support:             ' + enable_cups.to_string() + '\n'
