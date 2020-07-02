@@ -116,7 +116,6 @@
                 }
             ]
         },
-        /* Is this needed? */
         {
             "name": "gnome-desktop",
             "buildsystem": "meson",
