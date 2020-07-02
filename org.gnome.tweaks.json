@@ -1,0 +1,250 @@
+{
+    "id": "org.gnome.tweaks",
+    "runtime": "org.gnome.Platform",
+    "runtime-version": "3.36",
+    "sdk": "org.gnome.Sdk",
+    "command": "gnome-tweaks",
+    "finish-args": [
+        "--share=ipc",
+        "--socket=fallback-x11",
+        "--socket=wayland",
+        "--talk-name=org.gnome.Shell",
+        "--filesystem=/usr/share/glib-2.0/schemas:ro",
+        "--filesystem=xdg-run/dconf",
+        "--filesystem=~/.config/dconf:rw",
+        "--talk-name=ca.desrt.dconf",
+        "--env=DCONF_USER_CONFIG_DIR=~/.config/dconf"
+    ],
+    "cleanup": [
+        "/include",
+        "/lib/*.la",
+        "/lib/*.a",
+        "/lib/pkgconfig",
+        "/share/gir-1.0"
+    ],
+    "modules": [
+        "shared-modules/libusb/libusb.json",
+        "shared-modules/gudev/gudev.json",
+        "shared-modules/intltool/intltool-0.51.json",
+        {
+            "name" : "polkit",
+            "config-opts" : [
+                "--disable-polkitd",
+                "--disable-man-pages",
+                "--disable-introspection",
+                "--disable-examples",
+                "--disable-gtk-doc",
+                "--disable-libelogind",
+                "--disable-libsystemd-login",
+                "--with-systemdsystemunitdir=no",
+                "--with-authdb=dummy",
+                "--with-authfw=none"
+            ],
+            "rm-configure" : true,
+            "cleanup" : [
+                "/bin/*",
+                "/etc/pam.d",
+                "/etc/dbus-1",
+                "/share/dbus-1/system-services/*",
+                "/share/polkit-1",
+                "/lib/polkit-1"
+            ],
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "https://www.freedesktop.org/software/polkit/releases/polkit-0.116.tar.gz",
+                    "sha256" : "88170c9e711e8db305a12fdb8234fac5706c61969b94e084d0f117d8ec5d34b1"
+                },
+                {
+                    "type" : "patch",
+                    "path" : "polkit-build-Add-option-to-build-without-polkitd.patch"
+                },
+                {
+                    "type" : "file",
+                    "path" : "polkit-autogen",
+                    "dest-filename" : "autogen.sh"
+                }
+            ]
+        },
+        {
+            "name": "pwquality",
+            "config-opts": [
+                "--disable-python-bindings"
+            ],
+            "buildsystem": "autotools",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/libpwquality/libpwquality/archive/libpwquality-1.4.2.tar.gz",
+                    "sha256": "412caa72879175659492b543c7603765773c027e60b26492613fb2ac66d1af57"
+                }
+            ]
+        },
+        {
+            "name": "gusb",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Ddocs=false",
+                "-Dtests=false",
+                "-Dvapi=false"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/hughsie/libgusb/archive/0.3.4.tar.gz",
+                    "sha256": "07049389eb20847eedb664e2a2d954412a28bee125647ea6a445c59bebbd9944"
+
+                }
+            ]
+        },
+        {
+            "name": "colord",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Dargyllcms_sensor=false",
+                "-Dbash_completion=false",
+                "-Dman=false",
+                "-Dudev_rules=false",
+                "-Dsystemd=false"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/hughsie/colord/archive/1.4.4.tar.gz",
+                    "sha256": "26903ae44cb419390eb77aeb98ffad21bf1dbe2eb2e4c45e964414b0ad98d5ae"
+
+                }
+            ]
+        },
+        /* Is this needed? */
+        {
+            "name": "gnome-desktop",
+            "buildsystem": "meson",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://gitlab.gnome.org/GNOME/gnome-desktop/-/archive/3.36.3.1/gnome-desktop-3.36.3.1.tar.gz",
+                    "sha256": "05a7ad31f184afb6874defc9ca1aaecffaefcbd21198b0bfbdb160901ec60f5a"
+                }
+            ]
+        },
+        {
+            "name": "geocode-glib",
+            "buildsystem": "meson",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://gitlab.gnome.org/GNOME/geocode-glib/-/archive/3.26.2/geocode-glib-3.26.2.tar.gz",
+                    "sha256": "589ed8cf890fb47619ad1062b7117d16104554078b837344496d603d0896ec20"
+                }
+            ]
+        },
+        {
+            "name": "libgweather",
+
+            "buildsystem": "meson",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://gitlab.gnome.org/GNOME/libgweather/-/archive/3.36.1-fixed/libgweather-3.36.1-fixed.tar.gz",
+                    "sha256": "84611f5a64e70502f3e1a829d4fb358f91d32db9785e62fe637daffc0d720a87"
+                }
+            ]
+        },
+        {
+            "name": "upower",
+            "config-opts": [
+                "--with-systemdsystemunitdir=/app/lib/systemd/system"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://gitlab.freedesktop.org/upower/upower/-/archive/UPOWER_0_99_11/upower-UPOWER_0_99_11.tar.gz",
+                    "sha256": "226e2f6f1802560dc731d8416fca83d45cb91300e460abf14c1ac36e2f33da4a"
+                }
+            ]
+        },
+        {
+            "name": "libwacom",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/linuxwacom/libwacom/archive/libwacom-1.4.1.tar.gz",
+                    "sha256": "87c3d4282b84d27896afad0b69656aec1045593370978403ab0a66d1f02f3ff5"
+                }
+            ]
+        },
+        {
+            "name": "libndp",
+            "buildsystem": "autotools",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://libndp.org/files/libndp-1.7.tar.gz",
+                    "sha256": "2c480afbffb02792dbae3c13bbfb71d89f735562f2795cca0640ed3428b491b6"
+                }
+            ]
+        },
+        {
+            "name": "NetworkManager",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Dlibaudit=no",
+                "-Ddbus_conf_dir=/app/etc/dbus-1/system.d",
+                "-Ddbus_ifaces_dir=/app/share/dbus-1/interfaces",
+                "-Ddbus_sys_dir=/app/share/dbus-1/system.d",
+                "-Ddnsmasq=/usr/bin/true",
+                "-Ddocs=false",
+                "-Dintrospection=false",
+                "-Diptables=/usr/bin/true",
+                "-Djson_validation=false",
+                "-Dlibnm_glib=false",
+                "-Dlibpsl=false",
+                "-Dmodem_manager=false",
+                "-Dnmtui=false",
+                "-Dovs=false",
+                "-Dppp=false",
+                "-Dqt=false",
+                "-Dselinux=false",
+                "-Dsession_tracking=no",
+                "-Dsystemdsystemunitdir='no'",
+                "-Dsystemd_journal=false",
+                "-Dtests=no",
+                "-Dvapi=false"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/NetworkManager/NetworkManager/archive/1.24.2.tar.gz",
+                    "sha256": "bcb1f5b4355498a86d58fa1c3aa0e189046f2ada4901c81d654de905c4bd650f"
+                }
+            ]
+        },
+        {
+            "name": "gnome-settings-daemon",
+            "buildsystem": "meson",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/archive/GNOME_SETTINGS_DAEMON_3_36_1/gnome-settings-daemon-GNOME_SETTINGS_DAEMON_3_36_1.tar.gz",
+                    "sha256": "e345411f79b4a1175349e144cc772c7a9eb7ab9ae3a542a73609bee471b72748"
+                }
+            ]
+        },
+        {
+            "name": "gnome-tweaks",
+            "buildsystem": "meson",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://gitlab.gnome.org/GNOME/gnome-tweaks/-/archive/3.34.0/gnome-tweaks-3.34.0.tar.gz",
+                    "sha256": "c3098ca0b7ba6130dd480afc885598b0ae58059e431fecb2c7be004861b5ebb7"
+                },
+                {
+                    "type": "patch",
+                    "path": "gtweak-hardcode-system-dirs.patch"
+                }
+            ]
+        }
+    ]
+}
