@@ -1,19 +1,17 @@
 {
     "id": "org.gnome.tweaks",
     "runtime": "org.gnome.Platform",
-    "runtime-version": "3.36",
+    "runtime-version": "3.34",
     "sdk": "org.gnome.Sdk",
     "command": "gnome-tweaks",
     "finish-args": [
         "--share=ipc",
         "--socket=fallback-x11",
         "--socket=wayland",
+        "--talk-name=org.gnome.Shell.Extensions",
         "--talk-name=org.gnome.Shell",
         "--filesystem=/usr/share/glib-2.0/schemas:ro",
-        "--filesystem=xdg-run/dconf",
-        "--filesystem=~/.config/dconf:rw",
-        "--talk-name=ca.desrt.dconf",
-        "--env=DCONF_USER_CONFIG_DIR=~/.config/dconf"
+        "--metadata=X-DConf=migrate-path=/org/gnome/tweaks/"
     ],
     "cleanup": [
         "/include",
@@ -122,8 +120,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://gitlab.gnome.org/GNOME/gnome-desktop/-/archive/3.36.3.1/gnome-desktop-3.36.3.1.tar.gz",
-                    "sha256": "05a7ad31f184afb6874defc9ca1aaecffaefcbd21198b0bfbdb160901ec60f5a"
+                    "url": "https://download.gnome.org/sources/gnome-desktop/3.34/gnome-desktop-3.34.8.tar.xz",
+                    "sha256": "83047376086d59f9b9d4dbd138aa00aef54ab4417838444bee9b546369c38dda"
                 }
             ]
         },
@@ -145,8 +143,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://gitlab.gnome.org/GNOME/libgweather/-/archive/3.36.1-fixed/libgweather-3.36.1-fixed.tar.gz",
-                    "sha256": "84611f5a64e70502f3e1a829d4fb358f91d32db9785e62fe637daffc0d720a87"
+                    "url": "https://download.gnome.org/sources/libgweather/3.34/libgweather-3.34.0.tar.xz",
+                    "sha256": "02245395d639d9749fe2d19b7e66b64a152b9509ab0e5aad92514538b9c6f1b9"
                 }
             ]
         },
@@ -261,10 +259,9 @@
             ],
             "sources": [
                 {
-                    "type": "git",
-                    "url": "https://gitlab.gnome.org/GNOME/gnome-settings-daemon/",
-                    "tag": "GNOME_SETTINGS_DAEMON_3_36_1",
-                    "commit": "28ce4225535329dee6a9aff8c44bd1671ce9d2de"
+                    "type": "archive",
+                    "url": "https://download.gnome.org/sources/gnome-settings-daemon/3.34/gnome-settings-daemon-3.34.2.tar.xz",
+                    "sha256": "9fbae67e217e53b99e4f9e7d392c91ffbe31253941c9b136ef09c2d9db7ad7ed"
                 },
                 {
                     "type": "patch",
@@ -296,8 +293,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://gitlab.gnome.org/GNOME/gnome-tweaks/-/archive/3.34.0/gnome-tweaks-3.34.0.tar.gz",
-                    "sha256": "c3098ca0b7ba6130dd480afc885598b0ae58059e431fecb2c7be004861b5ebb7"
+                    "url": "https://download.gnome.org/sources/gnome-tweaks/3.34/gnome-tweaks-3.34.0.tar.xz",
+                    "sha256": "003326fab46e6faad9485924bca503f0c583e3b4553d6f673406eda396205250"
                 },
                 {
                     "type": "patch",
