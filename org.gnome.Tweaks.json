@@ -1,16 +1,16 @@
 {
-    "id": "org.gnome.tweaks",
+    "id": "org.gnome.Tweaks",
     "runtime": "org.gnome.Platform",
-    "runtime-version": "3.34",
+    "runtime-version": "3.38",
     "sdk": "org.gnome.Sdk",
     "command": "gnome-tweaks",
     "finish-args": [
         "--share=ipc",
+        "--device=dri",
         "--socket=fallback-x11",
         "--socket=wayland",
         "--talk-name=org.gnome.Shell.Extensions",
         "--talk-name=org.gnome.Shell",
-        "--filesystem=/usr/share/glib-2.0/schemas:ro",
         "--metadata=X-DConf=migrate-path=/org/gnome/tweaks/"
     ],
     "cleanup": [
@@ -118,11 +118,11 @@
             "name": "gnome-desktop",
             "buildsystem": "meson",
             "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://download.gnome.org/sources/gnome-desktop/3.34/gnome-desktop-3.34.8.tar.xz",
-                    "sha256": "83047376086d59f9b9d4dbd138aa00aef54ab4417838444bee9b546369c38dda"
-                }
+        {
+            "type": "archive",
+            "url": "https://download.gnome.org/sources/gnome-desktop/3.38/gnome-desktop-3.38.1.tar.xz",
+            "sha256": "17903513fed60814e967512dd892751cb6a1d2716136232884bc65bd53cc3be0"
+        }
             ]
         },
         {
@@ -131,8 +131,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://gitlab.gnome.org/GNOME/geocode-glib/-/archive/3.26.2/geocode-glib-3.26.2.tar.gz",
-                    "sha256": "589ed8cf890fb47619ad1062b7117d16104554078b837344496d603d0896ec20"
+                    "url": "https://download.gnome.org/sources/geocode-glib/3.26/geocode-glib-3.26.2.tar.xz",
+                    "sha256": "01fe84cfa0be50c6e401147a2bc5e2f1574326e2293b55c69879be3e82030fd1"
                 }
             ]
         },
@@ -143,8 +143,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.gnome.org/sources/libgweather/3.34/libgweather-3.34.0.tar.xz",
-                    "sha256": "02245395d639d9749fe2d19b7e66b64a152b9509ab0e5aad92514538b9c6f1b9"
+                    "url": "https://download.gnome.org/sources/libgweather/3.36/libgweather-3.36.1.tar.xz",
+                    "sha256": "de2709f0ee233b20116d5fa9861d406071798c4aa37830ca25f5ef2c0083e450"
                 }
             ]
         },
@@ -252,16 +252,28 @@
             ]
         },
         {
+            "name" : "libcanberra-gtk3",
+            "buildsystem" : "autotools",
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz",
+                    "sha256" : "c2b671e67e0c288a69fc33dc1b6f1b534d07882c2aceed37004bf48c601afa72"
+                }
+            ]
+        },
+        {
             "name": "gnome-settings-daemon",
             "buildsystem": "meson",
             "config-opts": [
+                "-Dsystemd=false",
                 "-Dwwan=false"
             ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.gnome.org/sources/gnome-settings-daemon/3.34/gnome-settings-daemon-3.34.2.tar.xz",
-                    "sha256": "9fbae67e217e53b99e4f9e7d392c91ffbe31253941c9b136ef09c2d9db7ad7ed"
+                    "url": "https://download.gnome.org/sources/gnome-settings-daemon/3.38/gnome-settings-daemon-3.38.1.tar.xz",
+                    "sha256": "e28121d91af82a2efa88f166d0c1e306c591f62f01ef7f553d48b6c13f070164"
                 },
                 {
                     "type": "patch",
