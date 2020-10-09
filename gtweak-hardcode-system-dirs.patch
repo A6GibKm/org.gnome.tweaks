@@ -13,10 +13,10 @@ index 6c8fdf8..2d6bf31 100644
 +++ b/gtweak/defs.py.in
 @@ -1,6 +1,6 @@
 -DATA_DIR = "@DATADIR@"
-+DATA_DIR = "/app/share"
++DATA_DIR = "/usr/share"
  PKG_DATA_DIR = "@PKGDATADIR@"
 -GSETTINGS_SCHEMA_DIR = "@GSETTINGSSCHEMADIR@"
-+GSETTINGS_SCHEMA_DIR = "/app/share/glib-2.0/schemas"
++GSETTINGS_SCHEMA_DIR = "/usr/share/glib-2.0/schemas"
  TWEAK_DIR = "@TWEAKDIR@"
  VERSION = "@VERSION@"
  LOCALE_DIR = "@LOCALEDIR@"

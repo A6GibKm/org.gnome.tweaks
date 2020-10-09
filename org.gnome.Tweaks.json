@@ -1,5 +1,5 @@
 {
-    "id": "org.gnome.Tweaks",
+    "id": "org.gnome.tweaks",
     "runtime": "org.gnome.Platform",
     "runtime-version": "3.38",
     "sdk": "org.gnome.Sdk",
@@ -11,7 +11,11 @@
         "--socket=wayland",
         "--talk-name=org.gnome.Shell.Extensions",
         "--talk-name=org.gnome.Shell",
-        "--metadata=X-DConf=migrate-path=/org/gnome/tweaks/"
+        "--filesystem=/usr/share/glib-2.0/schemas:ro",
+        "--filesystem=xdg-run/dconf",
+        "--filesystem=~/.config/dconf:rw",
+        "--talk-name=ca.desrt.dconf",
+        "--env=DCONF_USER_CONFIG_DIR=~/.config/dconf"
     ],
     "cleanup": [
         "/include",
@@ -118,11 +122,11 @@
             "name": "gnome-desktop",
             "buildsystem": "meson",
             "sources": [
-        {
-            "type": "archive",
-            "url": "https://download.gnome.org/sources/gnome-desktop/3.38/gnome-desktop-3.38.1.tar.xz",
-            "sha256": "17903513fed60814e967512dd892751cb6a1d2716136232884bc65bd53cc3be0"
-        }
+                {
+                    "type": "archive",
+                    "url": "https://download.gnome.org/sources/gnome-desktop/3.38/gnome-desktop-3.38.1.tar.xz",
+                    "sha256": "17903513fed60814e967512dd892751cb6a1d2716136232884bc65bd53cc3be0"
+                }
             ]
         },
         {
