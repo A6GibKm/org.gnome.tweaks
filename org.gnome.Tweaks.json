@@ -308,9 +308,9 @@
             "buildsystem": "meson",
             "sources": [
                 {
-                    "type": "archive",
-                    "url": "https://download.gnome.org/sources/gnome-tweaks/3.34/gnome-tweaks-3.34.0.tar.xz",
-                    "sha256": "003326fab46e6faad9485924bca503f0c583e3b4553d6f673406eda396205250"
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/fmuellner/gnome-tweaks.git",
+                    "branch": "remove-extensions"
                 },
                 {
                     "type": "patch",
